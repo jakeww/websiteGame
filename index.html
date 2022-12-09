@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <title>My Game</title>
+    <style>
+      body {
+        text-align: center;
+        font-family: sans-serif;
+      }
+      button {
+        padding: 0.5em 1em;
+        font-size: 1.5em;
+        border-radius: 0.5em;
+        border: none;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>My Game</h1>
+    <p>Click the button as many times as you can in 10 seconds!</p>
+    <p>
+      <button id="clicker">Click me!</button>
+    </p>
+    <p>
+      <strong id="score">0</strong> clicks
+    </p>
+    <script>
+      // Get a reference to the button and the score display
+      const clicker = document.querySelector('#clicker');
+      const score = document.querySelector('#score');
+
+      // Set the initial score to 0
+      let clicks = 0;
+
+      // Listen for clicks on the button
+      clicker.addEventListener('click', () => {
+        // Increment the score by 1 each time the button is clicked
+        clicks += 1;
+        score.textContent = clicks;
+      });
+
+      // Set a timer to reset the score after 10 seconds
+      setTimeout(() => {
+        alert(`Time's up! You got ${clicks} clicks.`);
+        clicks = 0;
+        score.textContent = clicks;
+      }, 10000);
+    </script>
+  </body>
+</html>

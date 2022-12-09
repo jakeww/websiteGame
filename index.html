@@ -28,23 +28,42 @@
       // Get a reference to the button and the score display
       const clicker = document.querySelector('#clicker');
       const score = document.querySelector('#score');
-
+  
       // Set the initial score to 0
       let clicks = 0;
-
+      let intervalId = null;
+  
       // Listen for clicks on the button
       clicker.addEventListener('click', () => {
         // Increment the score by 1 each time the button is clicked
         clicks += 1;
         score.textContent = clicks;
       });
-
+  
+      // Add a function to start the timer
+      function startTimer(callback) {
+        intervalId = setInterval(() => {
+          alert(`Time's up! You got ${clicks} clicks.`);
+          if (callback) {
+            callback();
+          }
+        }, 10000);
+      }
+  
+      // Add a function to clear the timer
+      function clearTimer() {
+        clearInterval(intervalId);
+      }
+  
       // Set a timer to reset the score after 10 seconds
-      setTimeout(() => {
-        alert(`Time's up! You got ${clicks} clicks.`);
+      startTimer(() => {
         clicks = 0;
         score.textContent = clicks;
-      }, 10000);
+      });
     </script>
   </body>
+  
+  
+  
+  
 </html>

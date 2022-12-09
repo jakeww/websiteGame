@@ -15,55 +15,88 @@
       }
     </style>
   </head>
-  <body>
-    <h1>My Game</h1>
-    <p>Click the button as many times as you can in 10 seconds!</p>
-    <p>
-      <button id="clicker">Click me!</button>
-    </p>
-    <p>
-      <strong id="score">0</strong> clicks
-    </p>
-    <script>
-      // Get a reference to the button and the score display
-      const clicker = document.querySelector('#clicker');
-      const score = document.querySelector('#score');
-  
-      // Set the initial score to 0
-      let clicks = 0;
-      let intervalId = null;
-  
-      // Listen for clicks on the button
-      clicker.addEventListener('click', () => {
-        // Increment the score by 1 each time the button is clicked
-        clicks += 1;
-        score.textContent = clicks;
-      });
-  
-      // Add a function to start the timer
-      function startTimer(callback) {
-        intervalId = setInterval(() => {
-          alert(`Time's up! You got ${clicks} clicks.`);
-          if (callback) {
-            callback();
-          }
-        }, 10000);
-      }
-  
-      // Add a function to clear the timer
-      function clearTimer() {
-        clearInterval(intervalId);
-      }
-  
-      // Set a timer to reset the score after 10 seconds
-      startTimer(() => {
-        clicks = 0;
-        score.textContent = clicks;
-      });
+<body>
+  <h1>My Game</h1>
+  <p>Click the button as many times as you can in 10 seconds!</p>
+  <p>
+    <button id="clicker">Click me!</button>
+  </p>
+  <p>
+    <strong id="score">0</strong> clicks
+  </p>
+  <h2>Scores</h2>
+  <ul id="scores">
+  </ul>
+  <button onclick="localStorage.clear()">Reset Leaderboard</button>
+
+  <script>
+ // Get a reference to the button, the score display, and the scores list
+const clicker = document.querySelector('#clicker');
+const score = document.querySelector('#score');
+const list = document.querySelector('#scores');
+
+// Set the initial score to 0
+let clicks = 0;
+let intervalId = null;
+
+// Listen for clicks on the button
+clicker.addEventListener('click', () => {
+  // Increment the score by 1 each time the button is clicked
+  clicks += 1;
+  score.textContent = clicks;
+});
+
+// Add a function to start the timer
+function startTimer(callback) {
+  intervalId = setInterval(() => {
+    alert(`Time's up! You got ${clicks} clicks.`);
+
+    // Save the score to localStorage
+    const scores = JSON.parse(localStorage.getItem('scores')) || [];
+    scores.push(clicks);
+    localStorage.setItem('scores', JSON.stringify(scores));
+
+    if (callback) {
+      callback();
+    }
+  }, 10000);
+}
+
+// Add a function to clear the timer
+function clearTimer() {
+  clearInterval(intervalId);
+}
+
+// Set a timer to reset the score after 10 seconds
+startTimer(() => {
+  clicks = 0;
+  score.textContent = clicks;
+
+  // Clear the list of scores
+  list.innerHTML = '';
+
+  // Get the scores from localStorage
+  const scores = JSON.parse(localStorage.getItem('scores')) || [];
+
+  // Sort the scores in descending order
+  scores.sort((a, b) => b - a);
+
+  // Trim the scores to the last 5 games
+  scores.slice(0, 5);
+
+  // Update the list with the scores
+  scores.forEach(score => {
+    const listItem = document.createElement('li');
+    listItem.textContent = score;
+    list.appendChild(listItem);
+  });
+});
+
+
+  </script>
+</body>
+
     </script>
   </body>
-  
-  
-  
-  
 </html>
+      

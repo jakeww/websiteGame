@@ -2,17 +2,56 @@
   <head>
     <title>My Game</title>
     <style>
-      body {
-        text-align: center;
-        font-family: sans-serif;
-      }
-      button {
-        padding: 0.5em 1em;
-        font-size: 1.5em;
-        border-radius: 0.5em;
-        border: none;
-        cursor: pointer;
-      }
+body {
+  background-color: #333; /* dark gray */
+  font-family: "Open Sans", sans-serif;
+  text-align: center;
+}
+
+h1 {
+  font-size: 48px;
+  color: #FFF; /* white */
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+p {
+  font-size: 24px;
+  color: #CCC; /* light gray */
+  margin: 20px 0;
+}
+
+button {
+  font-size: 18px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #00BFFF; /* light blue */
+  color: white;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  transition: all 0.25s;
+}
+
+button:hover {
+  cursor: pointer;
+  background-color: #0077CC; /* darker blue */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
+}
+
+button:active {
+  background-color: #004C99; /* even darker blue */
+  box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.25);
+  transform: translateY(0);
+}
+
+h2 {
+  font-size: 32px;
+  color: #FFF; /* white */
+  text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+
+
     </style>
   </head>
 <body>
@@ -30,6 +69,46 @@
   <button onclick="localStorage.clear()">Reset Leaderboard</button>
 
   <script>
+    // Get the button element
+var button = document.getElementById("clicker");
+
+// Add an event listener to the button that will run the animation when the button is clicked
+button.addEventListener("click", function(event) {
+  // Create a new element to hold the "+1" animation
+  var plusOne = document.createElement("div");
+
+  // Set the text of the element to "+1"
+  plusOne.innerText = "+1";
+
+  // Set the CSS styles for the element to make it appear and animate properly
+  plusOne.style.position = "absolute";
+  plusOne.style.top = event.pageY + "px";
+  plusOne.style.left = event.pageX + "px";
+  plusOne.style.fontSize = "32px";
+  plusOne.style.color = "white";
+  plusOne.style.transition = "top 0.5s, opacity 0.5s";
+
+  // Add the element to the page
+  document.body.appendChild(plusOne);
+
+  // Animate the element by setting a timeout to change its CSS styles after a short delay
+  setTimeout(function() {
+    plusOne.style.top = event.pageY - 100 + "px";
+    plusOne.style.opacity = "0";
+  }, 50);
+
+  // Remove the element from the page after the animation is complete
+  setTimeout(function() {
+    plusOne.parentNode.removeChild(plusOne);
+  }, 550);
+});
+
+
+document.body.style.webkitUserSelect = "none";
+document.body.style.mozUserSelect = "none";
+document.body.style.msUserSelect = "none";
+document.body.style.userSelect = "none";
+
  // Get a reference to the button, the score display, and the scores list
 const clicker = document.querySelector('#clicker');
 const score = document.querySelector('#score');

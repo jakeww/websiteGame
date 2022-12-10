@@ -1,0 +1,67 @@
+<html>
+  <head>
+    <style>
+#target {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border: 5px solid black;
+  border-radius: 50%;
+}
+#target::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  background-color: red;
+  border-radius: 50%;
+}
+    </style>
+  </head>
+  <body>
+    <div id="target"></div>
+    <div id="time"></div>
+    <script>
+      // Initialize variables
+      var score = 0;
+      var time = 10; // Time in seconds
+      var target = document.getElementById("target");
+      var timeEl = document.getElementById("time");
+      var timerInterval = null;
+      
+      // Set initial position of target
+      target.style.top = Math.random() * window.innerHeight + "px";
+      target.style.left = Math.random() * window.innerWidth + "px";
+      
+      // Set up click handler for target
+      target.onclick = function() {
+        score++;
+        
+        // Move target to random position
+        target.style.top = Math.random() * window.innerHeight + "px";
+        target.style.left = Math.random() * window.innerWidth + "px";
+      }
+      
+      // Set up timer
+      timerInterval = setInterval(function() {
+        timeEl.innerHTML = "Time remaining: " + time;
+        time--;
+        if (time <= 0) {
+          // Show score in alert and reset game
+          alert("Your score: " + score);
+          score = 0;
+          time = 30;
+          clearInterval(timerInterval);
+          
+          // Move target to random position
+          target.style.top = Math.random() * window.innerHeight + "px";
+          target.style.left = Math.random() * window.innerWidth + "px";
+        }
+      }, 1000); // 1000 ms = 1 second
+    </script>
+  </body>
+</html>

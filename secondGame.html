@@ -50,8 +50,27 @@ body {
 
 // Check if it's the player's first time playing the game
 if (localStorage.getItem("firstTime") === null) {
-  // If it is, show them the welcome message
-  alert("Welcome to the Archery Range! Shoot the target as many times as you can in 10 seconds.");
+  // Create the modal dialogue
+  const dialog = document.createElement("dialog");
+  // Set the text of the dialogue
+  dialog.innerHTML = "Welcome to the Archery Range! Shoot the target as many times as you can in 10 seconds.";
+  // Add the dialogue to the page
+  document.body.appendChild(dialog);
+  // Show the dialogue
+  dialog.show();
+  // Set the dialog's opacity to 1
+  dialog.style.opacity = 1;
+  // Set a timeout to hide the dialogue after 5 seconds
+  setTimeout(function() {
+    // Set the dialog's opacity to 0
+    dialog.style.opacity = 0;
+    // Add a transition to fade the dialogue out
+    dialog.style.transition = "opacity 0.5s";
+    // When the transition is complete, hide the dialog
+    dialog.addEventListener("transitionend", function() {
+      dialog.close();
+    });
+  }, 5000);
   // Set a flag in local storage to indicate that it's not the player's first time anymore
   localStorage.setItem("firstTime", "false");
 }

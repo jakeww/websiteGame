@@ -33,7 +33,6 @@
   border-radius: 999px;
   padding: 10px 20px;
 }
-
 body {
   background: linear-gradient(to bottom, #8484ff, #0095ff);
 }
@@ -42,12 +41,28 @@ body {
   <body>
     <div id="target"></div>
     <div id="time-remaining">Time remaining: 10</div>
+    <button onclick="clearFlag()">Clear flag</button>
   <script>
   // Initialize variables
   var score = 0;
   var target = document.getElementById("target");
-  var timeEl = document.getElementById("time");
   var timerInterval = null;
+
+// Check if it's the player's first time playing the game
+if (localStorage.getItem("firstTime") === null) {
+  // If it is, show them the welcome message
+  alert("Welcome to the Archery Range! Shoot the target as many times as you can in 10 seconds.");
+  // Set a flag in local storage to indicate that it's not the player's first time anymore
+  localStorage.setItem("firstTime", "false");
+}
+
+// This is for testing purposes only, and should be removed for production use
+function clearFlag() {
+  localStorage.removeItem("firstTime");
+}
+
+
+
   // Get a reference to the time remaining display element
   let timeRemainingDisplay = document.getElementById("time-remaining");
   // Set the initial time remaining (in seconds)

@@ -24,15 +24,47 @@
   </head>
   <body>
     <div id="target"></div>
-    <div id="time"></div>
+<div id="time-remaining">Time remaining: 10</div>
+
     <script>
-      // Initialize variables
-      var score = 0;
-      var time = 10; // Time in seconds
-      var target = document.getElementById("target");
+// Initialize variables
+var score = 0;
+var target = document.getElementById("target");
       var timeEl = document.getElementById("time");
       var timerInterval = null;
-      
+      // Get a reference to the time remaining display element
+let timeRemainingDisplay = document.getElementById("time-remaining");
+// Set the initial time remaining (in seconds)
+let timeRemaining = 10;
+
+// Create a function to update the time remaining
+function updateTime() {
+  // Decrement the time remaining by 1 second
+  timeRemaining -= 1;
+  // Update the time remaining display with the new time
+  timeRemainingDisplay.innerHTML = "Time remaining: " + timeRemaining;
+}
+
+// Use setInterval to call the updateTime function every 1 second (1000 milliseconds)
+setInterval(updateTime, 1000);
+
+function updateTime() {
+  // Decrement the time remaining by 1 second
+  timeRemaining -= 1;
+
+  // Check if the time is up
+  if (timeRemaining <= 0) {
+    // Show score in alert and reset game
+    alert("Your score: " + score);
+    score = 0;
+    timeRemaining = 10;
+    clearInterval(timerInterval);
+  }
+
+  // Update the time remaining display with the new time
+  timeRemainingDisplay.innerHTML = timeRemaining;
+}
+
       // Set initial position of target
       target.style.top = Math.random() * window.innerHeight + "px";
       target.style.left = Math.random() * window.innerWidth + "px";
@@ -40,28 +72,12 @@
       // Set up click handler for target
       target.onclick = function() {
         score++;
-        
         // Move target to random position
         target.style.top = Math.random() * window.innerHeight + "px";
         target.style.left = Math.random() * window.innerWidth + "px";
       }
       
-      // Set up timer
-      timerInterval = setInterval(function() {
-        timeEl.innerHTML = "Time remaining: " + time;
-        time--;
-        if (time <= 0) {
-          // Show score in alert and reset game
-          alert("Your score: " + score);
-          score = 0;
-          time = 30;
-          clearInterval(timerInterval);
-          
-          // Move target to random position
-          target.style.top = Math.random() * window.innerHeight + "px";
-          target.style.left = Math.random() * window.innerWidth + "px";
-        }
-      }, 1000); // 1000 ms = 1 second
+
     </script>
   </body>
 </html>
